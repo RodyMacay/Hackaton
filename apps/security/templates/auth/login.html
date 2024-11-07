@@ -1,51 +1,85 @@
-{% extends "components/base-session.html" %}
-{% load static %}
-
-{% block image_src %}
-    {% static 'img.webp' %}
-{% endblock %}
-
-{% block form %}
-<form method="post" class="space-y-6">
-    {% csrf_token %}
-    <div>
-        <label for="id_username" class="block text-sm font-medium text-gray-400">Email</label>
-        <div class="mt-1">
-            {{ form.username }}
-            {% if form.username.errors %}
-                <div class="text-red-500 text-sm">
-                    {{ form.username.errors }}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ferra-blue': '#002334',
+                        'ferra-orange': '#fe9900',
+                    }
+                }
+            }
+        }
+    </script>
+    <title>{{ title }} - HACKATON</title>
+</head>
+<body class="bg-gradient-to-br from-ferra-blue to-ferra-blue/80">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl overflow-hidden max-w-4xl w-full">
+            <div class="flex flex-col md:flex-row">
+                <!-- Left side with form -->
+                <div class="w-full md:w-1/2 p-8">
+                    <div class="text-center mb-8">
+                        <img src="/static/logo2.png" alt="HACKATON Logo" class="w-24 h-20 mx-auto">
+                        <h1 class="mt-4 text-2xl font-bold text-ferra-blue">{{ title }}</h1>
+                    </div>
+                    {% block form %}
+                    <form method="post" class="space-y-6">
+                        {% csrf_token %}
+                        <div>
+                            <label for="id_username" class="block text-sm font-medium text-ferra-blue">Email</label>
+                            <div class="mt-1">
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                    <div class="text-red-500 text-sm mt-1">
+                                        {{ form.username.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div>
+                            <label for="id_password" class="block text-sm font-medium text-ferra-blue">Contraseña</label>
+                            <div class="mt-1">
+                                {{ form.password }}
+                                {% if form.password.errors %}
+                                    <div class="text-red-500 text-sm mt-1">
+                                        {{ form.password.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div>
+                            {% if form.non_field_errors %}
+                                <div class="text-red-500 text-sm">
+                                    {{ form.non_field_errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-ferra-orange hover:bg-ferra-orange/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ferra-orange transition duration-150 ease-in-out">
+                                Iniciar Sesión
+                            </button>
+                        </div>
+                        <div class="text-sm text-center">
+                            <a href="{% url 'security:signup' %}" class="font-medium text-ferra-blue hover:text-ferra-orange transition duration-150 ease-in-out">
+                                ¿No tienes una cuenta? Regístrate
+                            </a>
+                        </div>
+                    </form>
+                    {% endblock %}
                 </div>
-            {% endif %}
-        </div>
-    </div>
-    <div>
-        <label for="id_password" class="block text-sm font-medium text-gray-400">Contraseña</label>
-        <div class="mt-1">
-            {{ form.password }}
-            {% if form.password.errors %}
-                <div class="text-red-500 text-sm">
-                    {{ form.password.errors }}
+                <!-- Right side with image -->
+                <div class="hidden md:block md:w-1/2">
+                    <img src="{% block image_src %}{% endblock %}" alt="HACKATON" class="w-full h-full object-cover">
                 </div>
-            {% endif %}
-        </div>
-    </div>
-    <div>
-        {% if form.non_field_errors %}
-            <div class="text-red-500 text-sm">
-                {{ form.non_field_errors }}
             </div>
-        {% endif %}
+        </div>
     </div>
-    <div>
-        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-ferra-orange hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ferra-orange">
-            Iniciar Sesión
-        </button>
-    </div>
-    <div class="text-sm text-center">
-        <a href="{% url 'security:signup' %}" class="font-medium text-ferra-orange hover:text-opacity-90">
-            ¿No tienes una cuenta? Regístrate
-        </a>
-    </div>
-</form>
-{% endblock %}
+</body>
+</html>

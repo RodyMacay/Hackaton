@@ -8,7 +8,7 @@ from apps.project.models import Project
 # Project Views
 class ProjectListView(ListView):
     model = Project
-    template_name = 'project_list.html'
+    template_name = 'project/project_list.html'
     context_object_name = 'projects'
 
 class ProjectDetailView(DetailView):
