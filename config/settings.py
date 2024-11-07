@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.security.context_processors.error_messages',
             ],
         },
     },
@@ -93,6 +94,13 @@ DATABASES = {
         "PORT": int(os.getenv("DB_PORT", 5432)),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+# }
 
 
 
@@ -132,13 +140,21 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_TMP = os.path.join(BASE_DIR, 'static')
+os.makedirs(STATIC_TMP, exist_ok=True)
+os.makedirs(STATIC_ROOT, exist_ok=True)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+
+
+AUTH_USER_MODEL = "security.User"
+
 STATIC_DIRS = (os.path.join(BASE_DIR, 'public/static'))
+ 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-
-AUTH_USER_MODEL = "security.User"
 
 LOGIN_REDIRECT_URL = '/'
 # Default primary key field type
