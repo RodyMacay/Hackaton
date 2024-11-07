@@ -1,0 +1,10 @@
+<form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Filtrar</button>
+</form>
+
+<ul>
+    {% for task in filter.qs %}
+        <li>{{ task.title }} - {{ task.get_tipo_display }}</li>
+    {% endfor %}
+</ul>
