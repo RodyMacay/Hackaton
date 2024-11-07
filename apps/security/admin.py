@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-
 from ..security.models import User,UserGroup, UserPermission
 # Register your models here.
 
@@ -21,4 +20,6 @@ class UserPermissionAdmin(admin.ModelAdmin):
     list_display = ['user', 'permission']
     list_filter = ['user', 'permission']
     search_fields = ['user__username', 'permission__name']
+
+
 
